@@ -11,6 +11,8 @@ web应用指纹识别
 cpan -i  WWW::Wappalyzer  
 
 perl FingerPrint.pl www.tanjiti.com
+
+
 web-servers: ["Nginx"]
 cdn: ["CloudFlare"]
 
