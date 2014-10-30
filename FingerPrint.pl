@@ -121,7 +121,7 @@ sub getFP{
 	my $response = sendHTTP($url);
 	
 	#add your new finger print rule json file
-	add_clues_file($rulefile) if  -e $rulefile;
+	add_clues_file($rulefile) if $rulefile and  -e $rulefile;
 
 
 	my %detected = detect(

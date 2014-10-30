@@ -1,0 +1,74 @@
+{
+	"categories": {
+		"1": "cms",
+		"2": "message-boards",
+		"3": "database-managers",
+		"4": "documentation-tools",
+		"5": "widgets",
+		"6": "ecommerce",
+		"7": "photo-galleries",
+		"8": "wikis",
+		"9": "hosting-panels",
+		"10": "analytics",
+		"11": "blogs",
+		"12": "javascript-frameworks",
+		"13": "issue-trackers",
+		"14": "video-players",
+		"15": "comment-systems",
+		"16": "captchas",
+		"17": "font-scripts",
+		"18": "web-frameworks",
+		"19": "miscellaneous",
+		"20": "editors",
+		"21": "lms",
+		"22": "web-servers",
+		"23": "cache-tools",
+		"24": "rich-text-editors",
+		"25": "javascript-graphics",
+		"26": "mobile-frameworks",
+		"27": "programming-languages",
+		"28": "operating-systems",
+		"29": "search-engines",
+		"30": "web-mail",
+		"31": "cdn",
+		"32": "marketing-automation",
+		"33": "web-server-extensions",
+		"34": "databases",
+		"35": "maps",
+		"36": "advertising-networks",
+		"37": "network-devices",
+		"38": "media-servers",
+		"39": "webcams",
+		"40": "printers",
+		"41": "payment-processors",
+		"42": "tag-managers",
+		"43": "paywalls"
+	},
+	"apps": {
+		"Discuz!":{
+            	"website": "www.discuz.net/forum.php",
+            	"cats": [ 1 ],
+            	"meta": { "generator": "Discuz"},
+            	"headers": {"Set-Cookie": "_lastact.*_sid|_sid.*_lastact|_sid.*smile|smile.*_sid"},
+            	"url": "/uc_server[/$]|uc_client[/$]",
+            	"html": "Powered by (?:Discuz!|<a href=\"http://www\\.discuz\\.net/\"|UCenter)",
+            	"implies": "php"
+        	},
+	"phpMyAdmin": {
+		"website": "www.phpmyadmin.net",
+		"cats": [ 3 ],
+		"html": "(?: \\| phpMyAdmin ([\\d.]+)<\\/title>|PMA_sendHeaderLocation\\(|<link [^>]*href=\"[^\"]*phpmyadmin\\.css\\.php)\\;version:\\1",
+		"env": "^pma_absolute_uri$",
+		"implies": [ "PHP", "MySQL" ]
+		},
+
+	"PHP": {
+		"website": "php.net",
+		"cats": [ 27 ],
+		"headers": { "Server": "php/?([\\d.]+)?\\;confidence:40\\;version:\\1", "X-Powered-By": "php/?([\\d.]+)?\\;confidence:40\\;version:\\1", "Set-Cookie": "PHPSESSID" },
+		"url": "\\.php(?:$|\\?)"
+		}
+
+	}
+}
+
