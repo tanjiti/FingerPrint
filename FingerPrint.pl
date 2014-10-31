@@ -16,14 +16,15 @@ chomp $rulefile if $rulefile;
 ########################################################
 # main progress
 ########################################################
-unless(-e $uri){
-	my $result = getFP($uri,$rulefile);
-	say "{";
-	print $result;
-	say "}";
-}else{
+if(-e $uri){
 
-	multiURL($uri,$rulefile);
+	 multiURL($uri,$rulefile);
+	
+}else{
+        my $result = getFP($uri,$rulefile);
+        say "{";
+        print $result;
+        say "}";
 
 }
 
@@ -36,37 +37,47 @@ unless(-e $uri){
 
 sub multiURL{
 	my ($file,$rulefile) = @_;
-	my $file_out = $file."_fingerprint";
 	
-	my @urls = ();
 	die "$file not exists or 0-size \n" unless -e $file and -s $file;
+	
+	my $tmp_file = $file."_tmp";
+	#uniq and clear Blank lines
+	`cat $file |sort|uniq|sort|grep -v "^\$">$tmp_file && mv $tmp_file $file `;
+	die "uniq clear blank lines failed ! \n" if $? != 0;
+	
+	
+	my $file_out = $uri."_fingerprint";
 	open my $IN, "<:encoding(UTF-8)", $file or die "cannot open $file for reading \n";
-	open my $OUT, ">:encoding(UTF-8)", $file_out or die "cannot open $file_out for reading \n";
+	open my $OUT, ">:encoding(UTF-8)", $file_out or die "cannot open $file_out for writing \n";
+	
+	my $line_number = `cat $file | wc -l`;
+	die "get $file record number failed ! \n" if $? != 0;
+	chomp $line_number;
+
+	say $OUT "{";
+	my $index = 1;
 	while(<$IN>){
+
+		last if $index > $line_number -1 ;
 		chomp;
-		push @urls, $_ if $_;
-
-	}	
-	close $IN;
-
-	my $str_result = "{\n";
-
-	foreach (@urls) {
 		my $result_per_url = getFP($_,$rulefile);
+
 		chomp $result_per_url;
-		$str_result .= $result_per_url .",\n";
+		$result_per_url .= ",";
+
+		say $OUT $result_per_url;
+
+		$index++;	
 	}
 	
-	chop $str_result;
-	chop $str_result;
+	my $last_host = `tail -1 $file`;
+	chomp $last_host;
+	my $result_per_url = getFP($last_host,$rulefile);
+	print $OUT $result_per_url;	
 
-	$str_result .= "\n}\n";
-
-	say $str_result;
-	print $OUT $str_result;	
+	say $OUT "}";
+	close $IN;
 	close $OUT;
-
-
 
 }
 
