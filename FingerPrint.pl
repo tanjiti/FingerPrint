@@ -3,7 +3,7 @@ use warnings;
 use feature qw(say);
 use WWW::Wappalyzer qw(detect get_categories add_clues_file);
 use LWP::UserAgent;
-
+use Devel::Peek qw(Dump);
 my $uri = shift;
 my $rulefile = shift;
 my $debug = 0;
@@ -154,10 +154,8 @@ sub getFP{
 sub jsonOutput{
 	my ($uri,$detected_ref) = @_;
 	my %detected = %$detected_ref;
-
 	my $str_app_fp = qw();
 	$str_app_fp = "\t\"$uri\": {\n";
-	
 	foreach (keys %detected){
 		my $tmp = $detected{$_};
 		my @details = @$tmp;
